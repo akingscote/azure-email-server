@@ -59,7 +59,7 @@
     "nsgName": "[concat(parameters('vmName'), '-nsg')]",
     "publicIpName": "[concat(parameters('vmName'), '-pip')]",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
-    "dnsLabelPrefix": "[toLower(concat(parameters('vmName'), '-', uniqueString(resourceGroup().id)))]",
+    "dnsLabelPrefix": "[uniqueString(resourceGroup().id)]",
     "linuxConfiguration": {
       "disablePasswordAuthentication": true,
       "ssh": {
