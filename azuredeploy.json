@@ -15,21 +15,10 @@
         "description": "SSH admin username for the VM."
       }
     },
-    "authenticationType": {
-      "type": "string",
-      "defaultValue": "sshPublicKey",
-      "allowedValues": [
-        "sshPublicKey",
-        "password"
-      ],
-      "metadata": {
-        "description": "Authentication type for the VM."
-      }
-    },
-    "adminPasswordOrKey": {
+    "adminPassword": {
       "type": "securestring",
       "metadata": {
-        "description": "SSH public key or password for the VM."
+        "description": "Password for the VM admin user."
       }
     },
     "vmSize": {
@@ -59,18 +48,7 @@
     "nsgName": "[concat(parameters('vmName'), '-nsg')]",
     "publicIpName": "[concat(parameters('vmName'), '-pip')]",
     "nicName": "[concat(parameters('vmName'), '-nic')]",
-    "dnsLabelPrefix": "[uniqueString(resourceGroup().id)]",
-    "linuxConfiguration": {
-      "disablePasswordAuthentication": true,
-      "ssh": {
-        "publicKeys": [
-          {
-            "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
-            "keyData": "[parameters('adminPasswordOrKey')]"
-          }
-        ]
-      }
-    }
+    "dnsLabelPrefix": "[uniqueString(resourceGroup().id)]"
   },
   "resources": [
     {
@@ -241,8 +219,7 @@
         "osProfile": {
           "computerName": "[parameters('vmName')]",
           "adminUsername": "[parameters('adminUsername')]",
-          "linuxConfiguration": "[if(equals(parameters('authenticationType'), 'sshPublicKey'), variables('linuxConfiguration'), json('null'))]",
-          "adminPassword": "[if(equals(parameters('authenticationType'), 'password'), parameters('adminPasswordOrKey'), json('null'))]"
+          "adminPassword": "[parameters('adminPassword')]"
         },
         "storageProfile": {
           "imageReference": {
