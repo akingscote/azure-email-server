@@ -18,21 +18,26 @@ Deploy a lightweight Ubuntu VM with a fully configured email server (Postfix + D
 
 | Parameter | Description | Default |
 |-----------|-------------|---------|
-| `vmName` | VM name (also used as DNS prefix) | — |
+| `vmName` | VM name | — |
 | `adminUsername` | SSH admin user | `azureuser` |
-| `authenticationType` | `sshPublicKey` or `password` | `sshPublicKey` |
-| `adminPasswordOrKey` | SSH public key or password | — |
+| `adminPassword` | Password for VM and email user | — |
 | `vmSize` | Azure VM size | `Standard_B1s` |
-| `mailDomain` | Mail domain for the server | — |
 
 ## How It Works
 
 1. Click the **Deploy to Azure** button above.
-2. Fill in the required parameters (VM name, SSH key, mail domain).
+2. Fill in the required parameters (VM name, password).
 3. Wait for the deployment to complete (~5-10 minutes).
-4. Access Roundcube webmail at: `http://<vmname>.<region>.cloudapp.azure.com`
+4. Access Roundcube webmail at: `http://mail-<unique-id>.<region>.cloudapp.azure.com`
 
-The webmail client automatically logs in as user **ashley** — no authentication required.
+## Login Credentials
+
+| Service | Username | Password |
+|---------|----------|----------|
+| **SSH** | Value of `adminUsername` (default: `azureuser`) | Your `adminPassword` |
+| **Roundcube Webmail** | `ashley` | Your `adminPassword` |
+
+The email user `ashley` is created with the same password you set for the VM.
 
 ## Architecture
 
