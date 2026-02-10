@@ -12,9 +12,6 @@
       "value": ""
     },
     "vmSize": {
-      "value": "Standard_B1s"
-    },
-    "mailDomain": {
       "value": "example.com"
     }
   }
