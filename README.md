@@ -12,7 +12,7 @@ Deploy a lightweight Ubuntu VM with a fully configured email server (Postfix + D
 | **Public IP** | Dynamic, with DNS label matching the VM name |
 | **NSG** | SSH (22), HTTP (80), HTTPS (443), SMTP (25), Submission (587), IMAP (143) |
 | **Mail Server** | Postfix (SMTP) + Dovecot (IMAP/LMTP) |
-| **Mail Client** | Roundcube Webmail with auto-login for user `ashley` |
+| **Mail Client** | Roundcube Webmail for the VM admin user |
 
 ## Parameters
 
@@ -35,9 +35,9 @@ Deploy a lightweight Ubuntu VM with a fully configured email server (Postfix + D
 | Service | Username | Password |
 |---------|----------|----------|
 | **SSH** | Value of `adminUsername` (default: `azureuser`) | Your `adminPassword` |
-| **Roundcube Webmail** | `ashley` | Your `adminPassword` |
+| **Roundcube Webmail** | Same as `adminUsername` (default: `azureuser`) | Your `adminPassword` |
 
-The email user `ashley` is created with the same password you set for the VM.
+The VM admin user is also the email user. Emails are addressed to `<adminUsername>@<public-dns>`.
 
 ## Architecture
 
@@ -51,7 +51,7 @@ The email user `ashley` is created with the same password you set for the VM.
 │  │ :25/:587 │  │  :143   │  │  :80   │  │
 │  └──────────┘  └─────────┘  └────────┘  │
 │                                          │
-│  User: ashley (auto-login via Roundcube) │
+│  User: <adminUsername> (login via Roundcube)  │
 └──────────────────────────────────────────┘
          │
     Public IP + DNS
@@ -60,7 +60,7 @@ The email user `ashley` is created with the same password you set for the VM.
 
 ## Email Addresses
 
-- **Inbox**: `ashley@<your-mail-domain>`
+- **Inbox**: `<adminUsername>@<public-dns>`
 - **Send/Receive**: Fully functional via Roundcube webmail
 
 ## Services (Auto-Start on Reboot)
